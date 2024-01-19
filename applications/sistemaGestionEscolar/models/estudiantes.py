@@ -11,7 +11,7 @@ the database, this table structure was created with the help of alembic
 
 from gluon.dal import DAL,Field
 # Conectar a la base de datos
-db = DAL('postgres://director:1234@postgres:5432/postgres')
+db = DAL('postgres://director:1234@localhost:5432/postgres')
 
 db.define_table('estudiantes',
     Field('id','integer'),
