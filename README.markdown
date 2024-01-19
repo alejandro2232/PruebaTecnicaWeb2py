@@ -1,72 +1,104 @@
+
 ## Readme
 
-web2py is a free open source full-stack framework for rapid development of fast, scalable, secure and portable database-driven web-based applications.
+Sistema de gestión escolar.
 
-It is written and programmable in Python. LGPLv3 License
+Prueba de conocimiento de un sistema orientado a la Gestión Escolar,  contiene módulos para salones, materias, registro de estudiantes, estado de asistencia de los estudiantes y administración de las tablas de salones y materias.  
 
-Learn more at http://web2py.com
+## Instalación del programa.
 
-## Google App Engine deployment
+1. Asegúrate de tener [Python 3.12.1](https://www.python.org/downloads/) instalado.
 
-    cp examples/app.yaml ./
-    cp handlers/gaehandler.py ./
+2. Descargar el proyecto del repositorio: https://github.com/alejandro2232/PruebaTecnicaWeb2py
 
-Then edit ./app.yaml and replace "yourappname" with yourappname.
+o clonarlo.
 
-## Important reminder about this GIT repo
+`git clone https://github.com/alejandro2232/PruebaTecnicaWeb2py`
 
-An important part of web2py is the Database Abstraction Layer (DAL). In early 2015 this was decoupled into a separate code-base ([PyDAL](https://github.com/web2py/pydal)). In terms of git, it is a sub-module of the main repository.
+Ubicarse en la raíz del proyecto.
 
-The use of a sub-module requires a one-time use of the --recursive flag for git clone if you are cloning web2py from scratch.
+3. Descargar e instalar Node (https://nodejs.org/en).
 
-    git clone --recursive https://github.com/web2py/web2py.git
+## Configuración de la Base de Datos
 
-If you have an existing repository, the commands below need to be executed at least once:
+1. Descarga e instala pgAdmin
 
-    git submodule update --init --recursive
+2. Crea una base de datos en PostgreSQL para el proyecto.
 
-PyDAL uses a separate stable release cycle to the rest of web2py. PyDAL releases will use a date-naming scheme similar to Ubuntu. Issues related to PyDAL should be reported to its separate repository.
+3. Configura la base de datos con el nombre base de datos=postgres, usuario=director, contraseña=1234, Hostname/address=localhost y puerto=5432
 
+## Ajustes
 
-## Documentation (readthedocs.org)
+1. En la raíz del proyecto ejecute este comando:
 
-[![Docs Status](https://readthedocs.org/projects/web2py/badge/?version=latest&style=flat-square)](http://web2py.rtfd.org/)
+`pip install -r requirements.txt`
 
-## Tests
+3. En la raíz del proyecto ejecute este comando:
 
-[![Build Status](https://img.shields.io/travis/web2py/web2py/master.svg?style=flat-square&label=Travis-CI)](https://app.travis-ci.com/github/web2py/web2py)
-[![MS Build Status](https://img.shields.io/appveyor/ci/web2py/web2py/master.svg?style=flat-square&label=Appveyor-CI)](https://ci.appveyor.com/project/web2py/web2py)
-[![Coverage Status](https://img.shields.io/codecov/c/github/web2py/web2py.svg?style=flat-square)](https://codecov.io/github/web2py/web2py)
+`tsc --project applications/sistemaGestionEscolar/static`
 
+En caso de que salga un error de que no reconoce tsc ejecutar el comando 
 
-## Installation Instructions
+`npm install -g typescript`
 
-To start web2py there is NO NEED to install it. Just unzip and do:
+4. En la raíz del proyecto ejecute este comando:
 
-    python web2py.py
+`alembic upgrade head`
 
-That's it!!!
+## Ejecutar
 
-## web2py directory structure
+1. En la raíz del proyecto ejecuté este comando: python web2py.py -a 1234 -i 0.0.0.0 -p 8000 (de esta forma la contraseña del administrador queda predefinida como 1234, puede cambiarla si es necesario) o python web2py.py (en caso de que lo haga de esta forma tendrá que digitar manualmente la contraseña de administrador que será usado más adelante)
+
+2. Diríjase al link http://127.0.0.1:8000/ y dé clic en el botón 'Mis sitios' ubicado en la barra de navegación.
+
+3. Digite la contraseña del administrador (en este caso, 1234).
+
+4. De la aplicación sistemaGestionEscolar seleccioné el menú desplegable Gestionar y después editar. Cuando lo haga, podrá visualizar la estructura del programa.
+
+## Carpetas de interes 
+
+En la aplicación sistemaGestionEscolar, se destacan las siguientes carpetas y archivos:
+
+De la carpeta controllers:
+
+estudiante_controlador.py, materias_controlador.py y salones_controlador.py,
+
+De la carpeta models: 
+
+estudiantes.py, materias.py y salones.py, 
+
+De la carpeta modules: 
+
+render.py, repository.py, carpeta factory y carpeta modelos
+
+De la carpeta views:
+
+Carpeta estudiante_controlador, materias_controlador y salones_controlador
+
+De la carpeta static: 
+
+Carpeta ts
+
+## Estructura de directorio
 
     project/
         README
         LICENSE
-        VERSION                    > this web2py version
-        web2py.py                  > the startup script
-        anyserver.py               > to run with third party servers
-        ...                        > other handlers and example files
-        gluon/                     > the core libraries
-            packages/              > web2py submodules
+        VERSION                    > esta versión web2py
+        web2py.py                  > el script de inicio
+        anyserver.py               > trabajar con servidores de terceros
+        ...                        > otros controladores y archivos de ejemplo
+        gluon/                     > las bibliotecas centrales
+            packages/              > submódulos web2py
               dal/
-            contrib/               > third party libraries
+            contrib/               > bibliotecas de terceros
             tests/                 > unittests
-        applications/              > are the apps
-            admin/                 > web based IDE
+        applications/              > las aplicaciones
+            admin/                 > IDE basado en web
                 ...
-            examples/              > examples, docs, links
+            examples/              > ejemplos, documentos, enlaces
                 ...
-            welcome/               > the scaffolding app (they all copy it)
+            welcome/               
                 ABOUT
                 LICENSE
                 models/
@@ -80,17 +112,15 @@ That's it!!!
                 modules/
                 cron/
                 tests/
-            ...                    > your own apps
-        examples/                  > example config files, mv .. and customize
-        extras/                    > other files which are required for building web2py
-        scripts/                   > utility and installation scripts
+            ...                    > tus propias aplicaciones
+        examples/                  > archivos de configuración de ejemplo, mv .. y personalizar
+        extras/                    > otros archivos necesarios para construir web2py
+        scripts/                   > utilidad y scripts de instalación
         handlers/
-            wsgihandler.py         > handler to connect to WSGI
-            ...                    > handlers for Fast-CGI, SCGI, Gevent, etc
-        site-packages/             > additional optional modules
-        logs/                      > log files will go in there
-        deposit/                   > a place where web2py stores apps temporarily
+            wsgihandler.py         > Manejador para conectarse a WSGI
+            ...                    > Manejadores para Fast-CGI, SCGI, Gevent, etc.
+        site-packages/             > módulos opcionales adicionales
+        logs/                      > los archivos de registro irán aqui
+        deposit/                   > un lugar donde web2py almacena aplicaciones temporalmente
 
-## Issues?
 
-Report issues at https://github.com/web2py/web2py/issues
