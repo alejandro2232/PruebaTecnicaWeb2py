@@ -10,7 +10,7 @@ def data():
             del(session.m[0])
         session.m.append(request.vars.q)
     return TABLE(*[TR(v) for v in sorted(session.m)]).xml()
-
+ 
 
 def flash():
     response.flash = 'this text should appear!'

@@ -1,0 +1,72 @@
+{{extend 'layout.html'}}
+<script type="module" src="{{=URL('static', 'js/estudiantes.js')}}" ></script>
+<script type="module" src="{{=URL('static', 'js/repository.js')}}" ></script>
+    
+<div id="formulario-container"></div>
+<br>
+
+{{=estudiantes_lista}}
+
+<script>
+
+// Function to obtain the selected attendance status and send it to the server.
+function obtenerValorSeleccionado(estado, id) {
+   // Convert id to an integer
+    idEstudiante = parseInt(id)
+    
+    // Creates an object with the data to be sent to the server
+    var data= {
+        idEstudiante: idEstudiante,
+        valorSeleccionado: estado.value
+    }
+    
+    // Make a POST request using the Fetch API
+    fetch("{{=URL('estudiante_controlador', 'actualizar_asistencias')}}", {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(data), 
+        })
+        .then(response => response.json())// Convert server response to JSON format
+        .then(data => {
+            // Handles server response
+            console.log(data.message);
+     
+        })
+        .catch((error) => {
+            // Handles request errors, such as network problems or server errors
+            console.error('Error:', error);
+            if (error instanceof Response) {
+        // Attempt to get the text of the server response
+        error.text().then(errorMessage => console.error('Server response:', errorMessage));
+    } else {
+        console.error('No se pudo obtener el texto de la respuesta del servidor.');
+    }
+        });
+
+}
+
+
+    
+    
+// ***********************************************************
+    
+
+var materiaId = 0;
+$(document).ready(function() {
+    // Selecciona todos los checkboxes con la clase "checkbox-materia"
+    $('.checkbox-materia').change(function() {
+        // Accede al valor del checkbox seleccionado
+        
+        materiaId= $(this).val()
+
+        // Puedes hacer lo que necesites con el ID de la materia
+        console.log("Checkbox de materia con ID " + materiaId + " ha cambiado.");
+
+        // Aquí puedes realizar cualquier otra lógica que necesites
+    });
+});
+    // /sistemaGestionEscolar/estudianteControlador/actualizar_asistencias
+
+</script>
